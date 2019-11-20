@@ -3,4 +3,4 @@
 
 ## Description ## 
 
-Tic Tac Toe game created using React (web framework)
+Tic Tac Toe game created using React
