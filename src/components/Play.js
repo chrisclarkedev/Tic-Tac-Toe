@@ -19,8 +19,7 @@ export default class Play extends Component {
     return (
       <div className="game">
         <div className="game-board">
-          <Board onClick={(i) =>
-            this.onClick(i)}
+          <Board onClick={(i) => this.onClick(i)}
             squares={current.squares} />
         </div>
 
