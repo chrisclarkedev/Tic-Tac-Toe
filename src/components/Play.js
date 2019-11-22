@@ -12,8 +12,15 @@ export default class Play extends Component {
       ]
     }
   }
+  jumpTo(step) {
+    this.setState({
+      stepNumber: step,
+      xIsNext: (step % 2) === 0
+    })
+  }
+
   handleClick(i) {
-    const history = this.state.history.slice(0, this.state.stepNumber + 1)
+    const history = this.state.history.slice(0, this.state.stepNumber + 1);
     const current = history[history.length - 1];
     const squares = current.squares.slice();
     const winner = calculateWinner(squares);
@@ -30,9 +37,28 @@ export default class Play extends Component {
     });
 
   }
+
   render() {
     const history = this.state.history;
     const current = history[this.state.stepNumber];
+    const winner = calculateWinner(current.squares);
+    const moves = history.map((step, move) => {
+      const desc = move ? 'Go to #' + move : 'Start the Game';
+      return (
+        <li key={move}>
+          <button onClick={() => { this.jumpTo(move) }}>
+            {desc}
+          </button>
+        </li>
+      )
+    });
+    let status;
+    if (winner) {
+      status = 'Winner is ' + winner;
+    } else {
+      status = 'Next Player is ' + (this.state.xIsNext ? 'X' : 'O');
+    }
+
 
     return (
       <div className="game">
@@ -40,12 +66,15 @@ export default class Play extends Component {
           <Board onClick={(i) => this.handleClick(i)}
             squares={current.squares} />
         </div>
+        <div className="game-info">
+          <div>{status}</div>
+          <ul>{moves}</ul>
+        </div>
 
-      </div >
+      </div>
     )
   }
 }
-
 
 function calculateWinner(squares) {
   const lines = [
@@ -59,14 +88,12 @@ function calculateWinner(squares) {
     [2, 4, 6]
   ];
 
-
   for (let i = 0; i < lines.length; i++) {
     const [a, b, c] = lines[i];
     if (squares[a] && squares[a] === squares[b] && squares[b] === squares[c]) {
       return squares[a];
     }
   }
-
 
   return null;
 }
