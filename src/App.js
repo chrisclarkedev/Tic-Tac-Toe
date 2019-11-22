@@ -5,7 +5,7 @@ import Play from './components/Play';
 function App() {
   return (
     <div className="App">
-      <h1>TESTING!!! </h1>
+      <h1>Tic Tac Toe!!! </h1>
       <Play />
     </div>
   );
